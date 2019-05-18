@@ -1,5 +1,6 @@
 import 'dart_reads.dart';
 import 'dart:io';
+import 'package:dart_reads/controller/reads_controller.dart';
 
 /// This type initializes an application.
 ///
@@ -30,10 +31,7 @@ class DartReadsChannel extends ApplicationChannel {
     // Prefer to use `link` instead of `linkFunction`.
     // See: https://aqueduct.io/docs/http/request_controller/
     router
-      .route("/example")
-      .linkFunction((request) async {
-        return Response.ok({"key": "value"});
-      });
+      .route("/reads/[:id]").link(() => ReadsController());
 
     router
       .route("/")
@@ -42,7 +40,7 @@ class DartReadsChannel extends ApplicationChannel {
     router
       .route("api")
       .linkFunction((req) async {
-        var file = await File("client.html").readAsString();
+        final file = await File("client.html").readAsString();
         return Response.ok(file)..contentType = ContentType.html;
       });
 
