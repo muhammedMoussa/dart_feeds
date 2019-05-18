@@ -1,4 +1,5 @@
 import 'dart_reads.dart';
+import 'dart:io';
 
 /// This type initializes an application.
 ///
@@ -37,6 +38,13 @@ class DartReadsChannel extends ApplicationChannel {
     router
       .route("/")
       .linkFunction((request) => Response.ok('Hi')..contentType = ContentType.html);
+
+    router
+      .route("api")
+      .linkFunction((req) async {
+        var file = await File("client.html").readAsString();
+        return Response.ok(file)..contentType = ContentType.html;
+      });
 
     return router;
   }
