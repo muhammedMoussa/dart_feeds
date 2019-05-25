@@ -1,21 +1,18 @@
 import 'package:dart_reads/dart_reads.dart';
 
-class Read extends Serializable {
+class Read extends ManagedObject<_Read> implements _Read {
+  String get detail => '$title by $author';
+}
+class _Read {
+  @primaryKey
+  int id;
+
+  @Column(unique: true)
   String title;
+
+  @Column()
   String author;
+
+  @Column()
   int year;
-
-  @override
-  Map<String, dynamic> asMap() => {
-    'title': title,
-    'author': author,
-    'year': year
-  };
-
-  @override
-  void readFromMap(Map<String, dynamic> requestBody) {
-    title = requestBody['title'] as String;
-    author = requestBody['author'] as String;
-    year = requestBody['year'] as int;
-  }
 }
